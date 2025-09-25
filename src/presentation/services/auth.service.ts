@@ -19,7 +19,7 @@ export class AuthService {
             await user.save();
             
            
-            // Email de confirmación
+            // Email de confirmación(va a regresar true si se envió)
             await this.sendEmailValidationLink(user.email);
 
             const {password,...userEntity} = UserEntity.formObject(user);
@@ -40,7 +40,7 @@ export class AuthService {
         const isMatch = bcryptAdapter.compare(loginUserDto.password, user.password);
         if(!isMatch) throw CustomError.badRequest('Password is not valid');
         const {password, ...userEntity} = UserEntity.formObject(user);
-        const token = await JwtAdapter.generateToken({id: user.id, email: user.email});
+        const token = await JwtAdapter.generateToken({id: user.id});
         if(!token) throw CustomError.internalServer('Error while creating JWT');
         return{
             user: userEntity,
