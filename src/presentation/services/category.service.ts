@@ -4,7 +4,7 @@ import { CreateCategoryDto, CustomError, PaginationDto, UserEntity } from "../..
 
 export class CategoryService {
 
-    constructor(){};
+    constructor(){}; 
 
     async createCategory(createCategoryDto: CreateCategoryDto, user: UserEntity){
         const categoryExist = await CategoryModel.findOne({name: createCategoryDto.name});
@@ -34,8 +34,8 @@ export class CategoryService {
             // const categories = await CategoryModel.find()
             //     
             const [total, categories] = await Promise.all([
-                CategoryModel.countDocuments(),
-                CategoryModel.find()
+                CategoryModel.countDocuments(),// total de documentos
+                CategoryModel.find()// categorias 
                     .skip((page - 1)*limit)
                     .limit(limit)
             ])
